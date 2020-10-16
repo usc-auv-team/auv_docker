@@ -38,9 +38,12 @@ RUN /bin/bash -c "cd ~/catkin_ws/src &&  \
 # Setup ROS and create catkin workspace
 RUN /bin/bash -c "source /opt/ros/noetic/setup.bash && \
     cd ~/catkin_ws/ && \
-    catkin_make && \
-    source devel/setup.bash"
+    catkin_make"
+
+# Replace entrypoint
+COPY ./ros_entrypoint.sh /
 
 EXPOSE 9090 11311
 
+# Launch rosbridge
 CMD ["roslaunch", "rosbridge_server", "rosbridge_websocket.launch"]
